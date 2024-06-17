@@ -26,6 +26,8 @@ run_test_and_update() {
 
 ###
 
+cd JavaScript
+
 MARKDOWN_FILE="REPORT.md"
 
 if [ ! -f "${MARKDOWN_FILE}" ]; then
