@@ -1,20 +1,21 @@
 #!/bin/bash
 # This script will merge a language specific test report into the README in the root dir
-# ./compile-readme.sh README.md JavaScript/REPORT.md
+# ./compile-readme.sh GROUP LANGUAGE
 #
-# TODO: Add more language support, the tags should be variables to support this. Currently ive only done the exercises in JS
 
 # Check if the correct number of arguments are passed
 if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <source_file> <target_file>"
+    echo "Usage: $0 <GROUP> <LANGUAGE>"
     exit 1
 fi
 
-source_file=${1}
-target_file=${2}
+ROOT_README_PATH="README.md"
+TARGET_GROUP=${1}
+TARGET_LANGUAGE=${2}
+TARGET_README_PATH="${TARGET_GROUP}/${TARGET_LANGUAGE}/REPORT.md"
 
-start_tag="<!--- START JAVASCRIPT BLOCK --->"
-end_tag="<!--- END JAVASCRIPT BLOCK --->"
+start_tag="<!--- START ${TARGET_GROUP} ${TARGET_LANGUAGE} BLOCK --->"
+end_tag="<!--- END ${TARGET_GROUP} ${TARGET_LANGUAGE} BLOCK --->"
 
 # Escape special characters in the start and end tags for use in sed
 start_tag_escaped=$(echo "${start_tag}" | sed 's/[\&/]/\\&/g')
@@ -22,19 +23,19 @@ end_tag_escaped=$(echo "${end_tag}" | sed 's/[\&/]/\\&/g')
 
 
 # Check if the files exists
-if [ ! -f "$source_file" ]; then
-    echo "Source file '$source_file' does not exist."
+if [ ! -f "${ROOT_README_PATH}" ]; then
+    echo "Source file '${ROOT_README_PATH}' does not exist."
     exit 1
 fi
 
-if [ ! -f "$target_file" ]; then
-    echo "Target file '$target_file' does not exist."
+if [ ! -f "${TARGET_README_PATH}" ]; then
+    echo "Target file '${TARGET_README_PATH}' does not exist."
     exit 1
 fi
 
 
-# Read the contents of the source file
-source_content=$(<"${source_file}")
+# Read the contents of the target report
+target_report_content=$(<"${TARGET_README_PATH}")
 
 temp_file=$(mktemp)
 
@@ -43,8 +44,8 @@ sed "/$start_tag_escaped/,/$end_tag_escaped/{
     /$start_tag_escaped/{p; r /dev/stdin
     };
     /$end_tag_escaped/p; d
-}" "$target_file" < <(echo "$source_content") > "$temp_file"
+}" "$ROOT_README_PATH" < <(echo "$target_report_content") > "$temp_file"
 
-mv "${temp_file}" "${target_file}"
+mv "${temp_file}" "${ROOT_README_PATH}"
 
-echo "Content from '${source_file}' has been injected into '${target_file}' between tags '${start_tag}' and '${end_tag}'."
+echo "Content from '${TARGET_README_PATH}' has been injected into '${ROOT_README_PATH}' between tags '${start_tag}' and '${end_tag}'."

@@ -1,16 +1,22 @@
-# leetcode
+# 
+## LeetCode
 
+### JavaScript
 
-## JavaScript
-<!--- START JAVASCRIPT BLOCK --->
+<!--- START LeetCode JavaScript BLOCK --->
 | Number | Problem | Result |
 | -------| --------|--------|
 | 001 | TwoSum.test.js | :heavy_check_mark: |
 | 002 | AddTwoNumbers.test.js | :heavy_check_mark: |
-<!--- END JAVASCRIPT BLOCK --->
+<!--- END LeetCode JavaScript BLOCK --->
 
+<!--- START LeetCode Python BLOCK --->
+<!--- END LeetCode Python BLOCK --->
 
-# Notes for me
+## NeetCode.io
+
+## Notes for me
+
 `npm run test`
 `npx jest JavaScript/000-Exercise.test.js`
 `make js-report` to build the readme

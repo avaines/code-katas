@@ -1,5 +1,10 @@
 #!/bin/bash
+# This script will run the JS tests for a given grouping
+# ./run-js-tests.sh GROUP
+#
+
 set -euo pipefail
+GROUP=${1}
 
 run_test_and_update() {
   test_file="${1}"
@@ -26,7 +31,7 @@ run_test_and_update() {
 
 ###
 
-cd JavaScript
+cd "${GROUP}/JavaScript"
 
 MARKDOWN_FILE="REPORT.md"
 
